@@ -42,11 +42,13 @@ if [ "$CHECK_PASSWORDS" == true ]; then
   for f in $PASSWORDS; do
     if [ ! -f $SCRIPT_PATH/$f ]; then
       echo -e "File $SCRIPT_PATH/$f ${RED}not found!${CL}"
+
       # Download?
       echo -en "${GREEN}Download (y${CL}/${RED}n${CL})? "
       read answer
       if echo "$answer" | grep -iq "^y" ;then
         echo "Get file $f"
+
         # Download
         wget -O "$SCRIPT_PATH/$f" "https://downloads.pwnedpasswords.com/passwords/$f"
         # Unpack
@@ -68,6 +70,7 @@ if [[ "$pw" == "" ]]; then
     echo -e "You must enter password. Bye!"
     exit 1
   else
+
     # Convert to hash
     PW_HASH=$(echo -n "$pw"| sha1sum | sed 's/ .*$//' | tr a-z A-Z)
     # Check hash in the pawned database
@@ -80,7 +83,6 @@ if [[ "$pw" == "" ]]; then
       else
         echo -e "${GREEN}Wow - you password not found!${CL}"
       fi
-
     done
 fi
 
@@ -96,7 +98,3 @@ while true; do
       * ) printf "Please answer yes or no.\n";;
       esac
 done
-
-
-
-
